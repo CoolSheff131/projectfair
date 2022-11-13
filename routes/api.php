@@ -14,6 +14,9 @@ Route::middleware(['adminAuthProtected'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/Institute', App\Http\Controllers\Admin\Institute\IndexController::class); // Получение всех институтов
     });
+    Route::group(['prefix' => 'admin'], function() {
+        Route::post('/mail', App\Http\Controllers\Admin\Mail\IndexController::class);
+    });
 });
 
 // --------- USER ROUTES ---------
