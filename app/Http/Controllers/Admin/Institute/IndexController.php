@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Institute;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\InstituteResource;
 use App\Models\Institute;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,11 @@ use Illuminate\Http\Request;
  */
 class IndexController extends Controller
 {
+//* later add documention
+
     public function __invoke()
     {
         $institutes = Institute::all();
-        return $institutes;
+        return InstituteResource::collection($institutes);
     }
 }

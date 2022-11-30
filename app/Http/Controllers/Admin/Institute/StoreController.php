@@ -12,7 +12,7 @@ class StoreController extends Controller
 {
     public function __invoke(StoreRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->validated();
         Institute::create($data);
         return response([]);
     }
