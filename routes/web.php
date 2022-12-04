@@ -11,3 +11,6 @@ Route::group(['namespace' => 'Campus'], function () {
 Route::get('{page}', function () {
     return view('index');
 })->where('page', '.*');
+
+
+Route::get('send', 'MailController@send');
