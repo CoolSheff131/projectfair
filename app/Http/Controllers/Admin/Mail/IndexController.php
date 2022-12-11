@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Mail;
 use App\Http\Controllers\Controller;
 use App\Models\Candidate;
 use Illuminate\Http\Request;
+use Mail;
 
 /**
 * Получение всех институтов
@@ -14,23 +15,24 @@ class IndexController extends Controller
     public function __invoke(Request $request)
     {
         $emails = array();
-        $group = $request->get('group');
         $content = $request->get('content');
+        $subject = $request->get('subject');
 
-        $candidates = Candidate::all();
-        foreach ($candidates as $candidate) {
-            $candidateGroup = $candidate.group();
-            if ($candidateGroup == $group) {
-                array_push($emails, $candidate.email());
-            }
+        $supervizors = Supervisor::all();
+        foreach ($supervizors as $supervizor) {
+            array_push($emails, $supervizor.email()); // не знаю как получить мейл преподователя
         }
 
-    if (count($emails) == 0) {
-        return;
-    }
+        if (count($emails) == 0) {
+            return;
+        }
 
-    // mail logistics...
-    // send to all off $emails with $content
+        foreach($emails as $mail) {
+            Mail::send(['text' => 'mail'], ['name', 'Чемитов Павел Евгеньевич'], function ($message){
+                $message -> to($mail, $content) -> subject($subject);
+                $messsage ->from('projfair@istu.edu', 'Чемитов Павел Евгеньевич');
+            });
+        }
 
     }
 }
